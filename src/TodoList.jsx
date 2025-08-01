@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
+import TaskItem from "./components/TaskItem";
 import "./TodoList.css";
 
 function TodoList() {
@@ -26,11 +27,11 @@ function TodoList() {
     setTodosList(todosList.filter((t) => t.id !== id));
   };
 
-  const toggleDone = (id) => {
-    setTodosList(
-      todosList.map((t) => (t.id === id ? { ...t, done: !t.done } : t))
+  const toggleDone = useCallback((id) => {
+    setTodosList((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t))
     );
-  };
+  }, []);
 
   const startEditing = (id, currentText) => {
     setEditing(id);
@@ -45,6 +46,14 @@ function TodoList() {
     setInput("");
   };
 
+  const pendingTasks = useMemo(() => {
+    return todosList.filter((t) => !t.done);
+  }, [todosList]);
+
+  const completedTasks = useMemo(() => {
+    return todosList.filter((t) => t.done);
+  }, [todosList]);
+
   return (
     <div className="todo-box">
       <h2>To-Do List 📋</h2>
@@ -58,45 +67,47 @@ function TodoList() {
         <button onClick={addTask}>ADD</button>
       </div>
 
-      <ul className="todo-list">
-        {todosList.map((t) => (
-          <li key={t.id} className={t.done ? "done" : ""}>
-            <span
-              className={`circle ${t.done ? "checked" : ""}`}
-              onClick={() => toggleDone(t.id)}
-            ></span>
-
-            {editing === t.id ? (
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
+      <div className="split-box">
+        <div>
+          <h3>Pending Tasks</h3>
+          <ul className="todo-list">
+            {pendingTasks.map((t) => (
+              <TaskItem
+                key={t.id}
+                task={t}
+                isEditing={editing === t.id}
+                input={input}
+                onToggleDone={toggleDone}
+                onStartEditing={startEditing}
+                onSaveEdit={saveEdit}
+                onCancelEdit={() => setEditing(null)}
+                onInputChange={setInput}
+                onRemove={removeTask}
               />
-            ) : (
-              <span>{t.done ? <s>{t.text}</s> : t.text}</span>
-            )}
+            ))}
+          </ul>
+        </div>
 
-            <div className="actions">
-              {editing === t.id ? (
-                <>
-                  <button className="save" onClick={() => saveEdit(t.id)}>
-                    ✔
-                  </button>
-                  <button className="cancel" onClick={() => setEditing(null)}>
-                    ✖
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button onClick={() => startEditing(t.id, t.text)}>✏️</button>
-                  <button className="delete" onClick={() => removeTask(t.id)}>
-                    🗑️
-                  </button>
-                </>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
+        <div>
+          <h3>Completed Tasks</h3>
+          <ul className="todo-list">
+            {completedTasks.map((t) => (
+              <TaskItem
+                key={t.id}
+                task={t}
+                isEditing={editing === t.id}
+                input={input}
+                onToggleDone={toggleDone}
+                onStartEditing={startEditing}
+                onSaveEdit={saveEdit}
+                onCancelEdit={() => setEditing(null)}
+                onInputChange={setInput}
+                onRemove={removeTask}
+              />
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 .todo-box {
-  max-width: 400px;
+  max-width: 800px;
   margin: 40px auto;
   background: white;
   padding: 20px;
@@ -122,4 +122,19 @@
 .todo-list li button.cancel {
   background-color: #dd3445 !important;
   color: white;
+}
+
+.split-box {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.split-box > div {
+  flex: 1;
+  background-color: #fcfbfb;
+  border: 1px solid #eeecec; 
+  border-radius: 12px;
+  padding: 10px 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); 
 }
