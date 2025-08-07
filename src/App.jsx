@@ -1,16 +1,17 @@
 import "./App.css";
 //import TodoList from "./TodoList";
 // import TodoList from "./TodoListClass";
-import { TodoProvider } from "./context/TodoProvider";
-import TodoList from "./TodoListContext";
+// import { TodoProvider } from "./context/TodoProvider";
+// import TodoList from "./TodoListContext";
+import TodoList from "./TodoListRedux";
 
 function App() {
-  // return <TodoList />;
-  return (
-    <TodoProvider>
-      <TodoList />
-    </TodoProvider>
-  );
+  return <TodoList />;
+  // return (
+  //   <TodoProvider>
+  //     <TodoList />
+  //   </TodoProvider>
+  // );
 }
 
 export default App;

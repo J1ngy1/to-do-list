@@ -1,19 +1,15 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import TaskItem from "./components/TaskItem";
 import "./TodoList.css";
-import { useTodo } from "./context/useTodo";
+import { useDispatch, useSelector } from "react-redux";
 
 function TodoList() {
-  const {
-    todosList,
-    dispatch,
-    newTask,
-    setNewTask,
-    editing,
-    setEditing,
-    input,
-    setInput,
-  } = useTodo();
+  const todosList = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  const [newTask, setNewTask] = useState("");
+  const [editing, setEditing] = useState(null);
+  const [input, setInput] = useState("");
 
   const addTask = () => {
     const trimmed = newTask.trim();
