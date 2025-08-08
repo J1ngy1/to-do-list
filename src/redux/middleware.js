@@ -1,5 +1,5 @@
 export const formatAddTitleMiddleware = () => (next) => (action) => {
-  if (action.type === "ADD") {
+  if (action.type === "ADD" || action.type.endsWith("/addTodo")) {
     const now = new Date().toLocaleDateString("en-CA");
     const formatted = `Added at ${now}: ${action.payload.text}`;
     const newAction = {

@@ -133,8 +133,26 @@
 .split-box > div {
   flex: 1;
   background-color: #fcfbfb;
-  border: 1px solid #eeecec; 
+  border: 1px solid #eeecec;
   border-radius: 12px;
   padding: 10px 16px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); 
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.status-msg {
+  margin-top: 1rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.loading-msg {
+  background-color: #f0f4ff;
+  color: #334e9a;
+}
+
+.error-msg {
+  background-color: #fff5f5;
+  color: #a52a2a;
 }
